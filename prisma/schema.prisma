@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  username  String   @unique
+  password  String
+  googleId  String?
+  avatar    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  tasklistMembers TasklistMember[]
+
+  @@map("users")
+}
+
+model TasklistMember {
+  userId     String
+  tasklistId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id])
+  tasklist Tasklist @relation(fields: [tasklistId], references: [id])
+
+
+  @@id([userId, tasklistId])
+  @@map("tasklist_members")
+}
+
+model Tasklist {
+  id        String   @id @default(uuid())
+  name      String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  tasks           Task[]
+  tasklistMembers TasklistMember[]
+
+  @@map("tasklists")
+}
+
+model Task {
+  id           String    @id @default(uuid())
+  name         String
+  description  String
+  isFinished   Boolean
+  finishedDate DateTime?
+  tasklistId   String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt
+
+  tasklist Tasklist @relation(fields: [tasklistId], references: [id])
+
+  @@map("tasks")
+}
