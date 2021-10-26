@@ -1,11 +1,11 @@
 import { Nullable } from '@/app/shared/core/domain/valueObjects/Nullable';
-import { DataSource } from '@/app/shared/dataSources/DataSource';
+import { Repository } from '@/app/shared/dataSources/Repository';
 import { UserId } from '../core/domain/entity/properties/UserId';
 import { UserUsername } from '../core/domain/entity/properties/UserUsername';
 import { UserEntity } from '../core/domain/entity/UserEntity';
 import { IUserRepository } from '../core/domain/IUserRepository';
 
-export class UserRepository extends DataSource implements IUserRepository {
+export class UserRepository extends Repository implements IUserRepository {
 	async getByUsername(username: UserUsername): Promise<Nullable<UserEntity>> {
 		const result = await this.prisma.user.findUnique({
 			where: { username: username.value },

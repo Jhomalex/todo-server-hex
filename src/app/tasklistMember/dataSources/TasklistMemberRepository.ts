@@ -1,12 +1,12 @@
 import { Nullable } from '@/app/shared/core/domain/valueObjects/Nullable';
-import { DataSource } from '@/app/shared/dataSources/DataSource';
+import { Repository } from '@/app/shared/dataSources/Repository';
 import { TasklistId } from '@/app/tasklist/core/domain/entity/properties/TasklistId';
 import { UserId } from '@/app/user/core/domain/entity/properties/UserId';
 import { TasklistMemberEntity } from '../core/domain/entity/TasklistMemberEntity';
 import { ITasklistMemberRepository } from '../core/domain/ITasklistMemberRepository';
 
 export class TasklistMemberRepository
-	extends DataSource
+	extends Repository
 	implements ITasklistMemberRepository
 {
 	async listByTasklistId(

@@ -1,11 +1,11 @@
 import { Nullable } from '@/app/shared/core/domain/valueObjects/Nullable';
-import { DataSource } from '@/app/shared/dataSources/DataSource';
+import { Repository } from '@/app/shared/dataSources/Repository';
 import { TasklistId } from '@/app/tasklist/core/domain/entity/properties/TasklistId';
 import { TaskId } from '../core/domain/entity/properties/TaskId';
 import { TaskEntity } from '../core/domain/entity/TaskEntity';
 import { ITaskRepository } from '../core/domain/ITaskRepository';
 
-export class TaskRepository extends DataSource implements ITaskRepository {
+export class TaskRepository extends Repository implements ITaskRepository {
 	async listByTasklistId(tasklistId: TasklistId): Promise<TaskEntity[]> {
 		const result = await this.prisma.task.findMany({
 			where: { tasklistId: tasklistId.value },

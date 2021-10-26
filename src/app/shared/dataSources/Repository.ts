@@ -1,5 +1,5 @@
 import { PrismaClient } from '.prisma/client';
 
-export class DataSource {
+export class Repository {
 	protected prisma = new PrismaClient();
 }
