@@ -38,6 +38,14 @@ const env = {
 	jwt: {
 		secretKey: process.env.JWT_SECRET_KEY || 'h4l4M4dR1do7',
 	},
+	rabbitmq: {
+		protocol: process.env.RABBITMQ_PROTOCOL || 'amqp',
+		host: process.env.RABBITMQ_HOST || 'localhost',
+		port: parseInt(process.env.RABBITMQ_PORT as string) || 5432,
+		username: process.env.RABBITMQ_USERNAME || 'rabbitmq',
+		password: process.env.RABBITMQ_PASSWORD as string,
+		exchangeName: process.env.EXCHANGE_NAME as string,
+	},
 };
 
 export { env };

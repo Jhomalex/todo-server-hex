@@ -3,10 +3,9 @@ import * as user from '@/app/user/resolvers';
 import * as tasklist from '@/app/tasklist/resolvers';
 import * as tasklistMember from '@/app/tasklistMember/resolvers';
 import * as task from '@/app/task/resolvers';
-import { PubSub } from 'graphql-subscriptions';
+import { getPubSubInteractor } from './PubSub/core/useCases';
 
 export const buildGqlSchema = async () => {
-	const pubSub = new PubSub();
 	return await buildSchema({
 		resolvers: [
 			user.SigninResolver,
@@ -25,6 +24,6 @@ export const buildGqlSchema = async () => {
 			task.ListTaskSubResolver,
 		],
 		validate: true,
-		pubSub,
+		pubSub: await getPubSubInteractor.run(),
 	});
 };

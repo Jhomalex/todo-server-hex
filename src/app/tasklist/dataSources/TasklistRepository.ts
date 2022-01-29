@@ -67,7 +67,6 @@ export class TasklistRepository
 	}
 
 	async getById(id: TasklistId): Promise<Nullable<TasklistEntity>> {
-		console.log(id);
 		const result = await this.prisma.tasklist.findUnique({
 			where: { id: id.value },
 			include: {
