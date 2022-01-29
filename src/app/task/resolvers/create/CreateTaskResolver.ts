@@ -1,7 +1,14 @@
 import { InvalidException } from '@/app/shared/core/domain/InvalidException';
 import { Context } from '@/app/shared/resolvers/Context';
 import { TasklistId } from '@/app/tasklist/core/domain/entity/properties/TasklistId';
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
+import {
+	Arg,
+	Ctx,
+	Mutation,
+	PubSub,
+	PubSubEngine,
+	Resolver,
+} from 'type-graphql';
 import { TaskDescription } from '../../core/domain/entity/properties/TaskDescription';
 import { TaskFinishedDate } from '../../core/domain/entity/properties/TaskFinishedDate';
 import { TaskName } from '../../core/domain/entity/properties/TaskName';
@@ -13,6 +20,7 @@ import { CreateTaskInput } from './CreateTaskInput';
 export class CreateTaskResolver {
 	@Mutation(() => TaskResponse)
 	async createTask(
+		@PubSub() pubSub: PubSubEngine,
 		@Arg('data', () => CreateTaskInput)
 		data: CreateTaskInput,
 		@Ctx() ctx: Context
@@ -27,6 +35,11 @@ export class CreateTaskResolver {
 				finishedDate: data.finishedDate
 					? new TaskFinishedDate(data.finishedDate)
 					: undefined,
+				userLoggedId: ctx.user.id,
+			});
+
+			await pubSub.publish('LISTTASK', {
+				tasklistId: data.tasklistId,
 				userLoggedId: ctx.user.id,
 			});
 

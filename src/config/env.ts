@@ -23,6 +23,7 @@ const env = {
 		port: parseInt(process.env.APP_PORT as string) || 3000,
 		url: process.env.APP_URL || 'http://localhost:3000',
 		frontUrl: process.env.FRONT_URL || 'http://localhost:8080',
+		env: process.env.NODE_ENV,
 	},
 	db: {
 		connection: process.env.DB_CONNECTION || 'pgsql',

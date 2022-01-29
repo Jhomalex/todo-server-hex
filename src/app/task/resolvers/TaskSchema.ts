@@ -16,7 +16,7 @@ export class Task {
 	isFinished!: boolean;
 
 	@Field(() => Date, { nullable: true })
-	finishedDate?: Date;
+	finishedDate!: Date | null;
 
 	@Field(() => ID)
 	tasklistId!: string;

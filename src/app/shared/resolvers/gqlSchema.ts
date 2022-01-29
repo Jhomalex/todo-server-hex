@@ -3,8 +3,10 @@ import * as user from '@/app/user/resolvers';
 import * as tasklist from '@/app/tasklist/resolvers';
 import * as tasklistMember from '@/app/tasklistMember/resolvers';
 import * as task from '@/app/task/resolvers';
+import { PubSub } from 'graphql-subscriptions';
 
 export const buildGqlSchema = async () => {
+	const pubSub = new PubSub();
 	return await buildSchema({
 		resolvers: [
 			user.SigninResolver,
@@ -20,7 +22,9 @@ export const buildGqlSchema = async () => {
 			task.DeleteTaskResolver,
 			task.ListTaskResolver,
 			task.UpdateTaskResolver,
+			task.ListTaskSubResolver,
 		],
 		validate: true,
+		pubSub,
 	});
 };
